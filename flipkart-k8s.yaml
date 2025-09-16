@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flipkart-app
+  labels:
+    app: flipkart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flipkart
+  template:
+    metadata:
+      labels:
+        app: flipkart
+    spec:
+      containers:
+      - name: flipkart-container
+        image: flipkart-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 5000
+        envFrom:
+          - secretRef:
+              name: llmops-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flipkart-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: flipkart
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
