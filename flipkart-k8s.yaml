@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flipkart-container
-        image: flipkartrec-app:latest
+        image: flipkart-recom-app:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 5000
